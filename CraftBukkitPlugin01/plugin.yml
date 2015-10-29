@@ -1,0 +1,25 @@
+name: MyPlugin01
+main: chuckl0r.MyPlugin01
+version: 1.1.5-Beta
+author: Chuckl0r
+
+commands:
+    wispi:
+        description: Der Whisper Befehl.
+        usage: /<command>
+        permission: chuckl0r.MyPlugin01.wispi
+        permission-message: Du hast das Recht <permission> nicht!
+    gmode:
+        description: Der GameMode Changer.
+        usage: /<command> ([GameMode / Spieler]) ([GameMode])
+        permission: chuckl0r.MyPlugin01.gamemode
+        permission-message: Du hast das Recht <permission> nicht!
+    tm:
+        description: Zeit Manager.
+        usage: /<command> [time]
+        permission: chuckl0r.MyPlugin01.time
+        permission-message: Du hast das Recht <permission> nicht!
+    MyPlugin01:
+        description: Plugin Info.
+        usage: /<command> [info]
+        
