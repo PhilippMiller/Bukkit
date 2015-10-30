@@ -22,12 +22,12 @@ public class MyEssentials extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		this.getLogger().info(ChatColor.YELLOW + "MyPlugin01 wurde aktiviert!");
+		this.getLogger().info(ChatColor.YELLOW + "MyEssentials wurde aktiviert!");
 	}
 	
 	public void onDisable()
 	{
-		this.getLogger().info(ChatColor.YELLOW + "MyPlugin01 wurde deaktiviert!");
+		this.getLogger().info(ChatColor.YELLOW + "MyEssentials wurde deaktiviert!");
 	}
 	
 	
@@ -44,9 +44,9 @@ public class MyEssentials extends JavaPlugin
 		}
 		Player player = (Player) sender;
 		
-		//###########################
-		//######COMMAND "wispi"######
-		//###########################
+		//############################
+		//######COMMAND "/wispi"######
+		//############################
 		if (cmd.getName().equals("wispi"))
 		{
 			OfflinePlayerCheck offlinePlayer = new OfflinePlayerCheck();
@@ -55,11 +55,11 @@ public class MyEssentials extends JavaPlugin
 			
 			if ((args.length >= 2) && (otherPlayer == null))
 			{
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Der Spieler "+ ChatColor.DARK_RED + otherPlayer + ChatColor.RED + " ist nicht online!");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Der Spieler "+ ChatColor.DARK_RED + otherPlayer + ChatColor.RED + " ist nicht online!");
 			}
 			if (args.length < 2)
 			{
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/wispi [name] [text]");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/wispi [name] [text]");
 				return true;
 			}
 			
@@ -72,15 +72,15 @@ public class MyEssentials extends JavaPlugin
 					text = text + args[i] + " ";
 				}
 				
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.AQUA + "WHISPER an " + ChatColor.DARK_GRAY + args[0] + ": " + text);
-				otherPlayer.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.AQUA + "WHISPER von " + ChatColor.DARK_GRAY + sender.getName() + ": " + text);
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.AQUA + "WHISPER an " + ChatColor.DARK_GRAY + args[0] + ": " + text);
+				otherPlayer.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.AQUA + "WHISPER von " + ChatColor.DARK_GRAY + sender.getName() + ": " + text);
 				return true;
 			}
 			
 		}
 		
 		//###########################
-		//######COMMAND "/g"#####
+		//######COMMAND "/g"#########
 		//###########################
 		else if (cmd.getName().equals("gmode"))
 		{
@@ -91,12 +91,12 @@ public class MyEssentials extends JavaPlugin
 				if (gm == GameMode.CREATIVE)
 				{
 					player.setGameMode(GameMode.SURVIVAL);
-					sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
+					sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
 				}
 				else
 				{
 					player.setGameMode(GameMode.CREATIVE);
-					sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
+					sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
 				}
 				return true;
 			}
@@ -108,13 +108,13 @@ public class MyEssentials extends JavaPlugin
 				{
 					if (gm == GameMode.CREATIVE)
 					{
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Du bist bereits im Creative Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Du bist bereits im Creative Modus!");
 						return true;
 					}
 					else
 					{
 						player.setGameMode(GameMode.CREATIVE);	
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
 						return true;
 					}
 				}
@@ -122,13 +122,13 @@ public class MyEssentials extends JavaPlugin
 				{
 					if (gm == GameMode.SURVIVAL)
 					{
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Du bist bereits im Survival Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Du bist bereits im Survival Modus!");
 						return true;
 					}
 					else
 					{
 						player.setGameMode(GameMode.SURVIVAL);	
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Du bist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
 						return true;
 					}
 				}
@@ -142,19 +142,19 @@ public class MyEssentials extends JavaPlugin
 					if (gm_other == GameMode.CREATIVE)
 					{
 						otherPlayer.setGameMode(GameMode.SURVIVAL);
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
 					}
 					else
 					{
 						player.setGameMode(GameMode.CREATIVE);
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
 					}
 					return true;
 				}
 				
 				if ((args[0].equalsIgnoreCase("survival") == false) && (args[0].equalsIgnoreCase("creative") == false))
 				{
-					sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Mögliche GameModes: " + ChatColor.DARK_RED + "Creative , Survival");
+					sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Mögliche GameModes: " + ChatColor.DARK_RED + "Creative , Survival");
 					return true;
 				}
 				
@@ -173,13 +173,13 @@ public class MyEssentials extends JavaPlugin
 				{
 					if (gm == GameMode.CREATIVE)
 					{
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Der Spieler " + ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED + " ist bereits im " + ChatColor.DARK_RED + "Creative" + ChatColor.RED + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Der Spieler " + ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED + " ist bereits im " + ChatColor.DARK_RED + "Creative" + ChatColor.RED + " Modus!");
 						return true;
 					}
 					else
 					{
 						player.setGameMode(GameMode.CREATIVE);	
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Der Spieler " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im "+ ChatColor.DARK_GREEN +"Creative" + ChatColor.GREEN + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Der Spieler " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im "+ ChatColor.DARK_GREEN +"Creative" + ChatColor.GREEN + " Modus!");
 						return true;
 					}
 				}
@@ -187,19 +187,19 @@ public class MyEssentials extends JavaPlugin
 				{
 					if (gm == GameMode.SURVIVAL)
 					{
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Der Spieler " + ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED + " ist bereits im " + ChatColor.DARK_RED + "Survival" + ChatColor.RED + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Der Spieler " + ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED + " ist bereits im " + ChatColor.DARK_RED + "Survival" + ChatColor.RED + " Modus!");
 						return true;
 					}
 					else
 					{
 						player.setGameMode(GameMode.SURVIVAL);	
-						sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Der Spieler " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im "+ ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
+						sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Der Spieler " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im "+ ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
 						return true;
 					}
 				}
 				if ((args[1].equalsIgnoreCase("survival") == false) && (args[1].equalsIgnoreCase("creative") == false))
 				{
-					sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Mögliche GameModes: " + ChatColor.DARK_RED + "Creative , Survival");
+					sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Mögliche GameModes: " + ChatColor.DARK_RED + "Creative , Survival");
 					return true;
 				}
 			}
@@ -207,7 +207,7 @@ public class MyEssentials extends JavaPlugin
 		}
 		
 		//###########################
-		//######COMMAND "/tm"#####
+		//######COMMAND "/tm"########
 		//###########################
 		else if (cmd.getName().equals("tm"))
 		{
@@ -215,21 +215,21 @@ public class MyEssentials extends JavaPlugin
 			
 			if (args.length == 0)
 			{
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/tm [time]");
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Für [time] kann " + ChatColor.DARK_RED + "\"tag\", \"nacht\" oder ein Ganzzahliger Wert " + ChatColor.RED + "eingegeben werden.");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/tm [time]");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Für [time] kann " + ChatColor.DARK_RED + "\"tag\", \"nacht\" oder ein Ganzzahliger Wert " + ChatColor.RED + "eingegeben werden.");
 				return true;
 			}
 			
 			if (args[0].equalsIgnoreCase("tag"))
 			{
 				world.setTime(1000);
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Es ist "+ ChatColor.DARK_GREEN + "Tag!");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Es ist "+ ChatColor.DARK_GREEN + "Tag!");
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("nacht"))
 			{
 				world.setTime(13000);
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Es ist "+ ChatColor.DARK_GREEN + "Nacht!");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Es ist "+ ChatColor.DARK_GREEN + "Nacht!");
 				return true;
 			}
 			
@@ -240,30 +240,30 @@ public class MyEssentials extends JavaPlugin
 			}
 			catch (NumberFormatException e)
 			{
-				sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.RED + "Bitte " + ChatColor.DARK_RED + "\"tag\",\"nacht\" oder einen Ganzzahligen Wert eingeben!");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Bitte " + ChatColor.DARK_RED + "\"tag\",\"nacht\" oder einen Ganzzahligen Wert eingeben!");
 				return true;
 			}
 			
 			world.setTime(wert);
-			sender.sendMessage(ChatColor.GOLD + "[MyPlugin1]: " + ChatColor.GREEN + "Die Zeit wurde auf "+ ChatColor.DARK_GREEN + wert + ChatColor.GREEN + " gesetzt!");
+			sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Die Zeit wurde auf "+ ChatColor.DARK_GREEN + wert + ChatColor.GREEN + " gesetzt!");
 			return true;
 		}
 		
 		
-		//###########################
-		//######COMMAND "/MyPlugin01"#####
-		//###########################
-		else if (cmd.getName().equals("MyPlugin01"))
+		//##################################
+		//######COMMAND "/MyEssentials"#####
+		//##################################
+		else if (cmd.getName().equals("MyEssentials"))
 		{
 			ArrayList<String> list = new ArrayList<String>();
-			list.add(Bukkit.getServer().getPluginManager().getPlugin("MyPlugin01").getDescription().getName());
-			list.addAll(Bukkit.getServer().getPluginManager().getPlugin("MyPlugin01").getDescription().getAuthors());
-			list.add(Bukkit.getServer().getPluginManager().getPlugin("MyPlugin01").getDescription().getVersion());
+			list.add(Bukkit.getServer().getPluginManager().getPlugin("MyEssentials").getDescription().getName());
+			list.addAll(Bukkit.getServer().getPluginManager().getPlugin("MyEssentials").getDescription().getAuthors());
+			list.add(Bukkit.getServer().getPluginManager().getPlugin("MyEssentials").getDescription().getVersion());
 			
 			
 			String listString = "";
 
-			sender.sendMessage(ChatColor.GOLD + "[MyPlugin1] " + ChatColor.YELLOW + "Plugin Information");
+			sender.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.YELLOW + "Plugin Information");
 			for (String s : list)
 			{
 				sender.sendMessage("=> " + s);

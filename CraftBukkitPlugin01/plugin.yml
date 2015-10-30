@@ -1,5 +1,5 @@
-name: MyPlugin01
-main: chuckl0r.MyPlugin01
+name: MyEssentials
+main: chuckl0r.MyEssentials
 version: 1.1.5-Beta
 author: Chuckl0r
 
@@ -19,7 +19,7 @@ commands:
         usage: /<command> [time]
         permission: chuckl0r.MyPlugin01.time
         permission-message: Du hast das Recht <permission> nicht!
-    MyPlugin01:
+    MyEssentials:
         description: Plugin Info.
         usage: /<command> [info]
         
