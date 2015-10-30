@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 public class MyPlugin01CommandExecutor
 {
 	
-	private MyPlugin01 plugin;
+	private MyEssentials plugin;
 	
-	public MyPlugin01CommandExecutor(MyPlugin01 plugin)
+	public MyPlugin01CommandExecutor(MyEssentials plugin)
 	{
 		this.plugin = plugin;
 	}

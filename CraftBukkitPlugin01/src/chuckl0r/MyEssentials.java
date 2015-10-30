@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.*;
 
-public class MyPlugin01 extends JavaPlugin
+public class MyEssentials extends JavaPlugin
 {
 	
 	@Override
