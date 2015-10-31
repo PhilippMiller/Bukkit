@@ -1,6 +1,7 @@
 package chuckl0r;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,6 +11,10 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.*;
+import org.bukkit.material.MaterialData;
+
+import net.minecraft.server.v1_8_R3.Material;
 
 public class MyEssentialsCommandExecutor
 {
@@ -258,6 +263,23 @@ public class MyEssentialsCommandExecutor
 			{
 				sender.sendMessage("=> " + s);
 			}
+			
+			return true;
+		}
+		else if (cmd.getName().equals("g"))
+		{
+			int wert = 0;
+			try 
+			{
+				wert = Integer.parseInt(args[0]);
+			}
+			catch (NumberFormatException e)
+			{
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Bitte " + ChatColor.DARK_RED + "\"tag\",\"nacht\" oder einen Ganzzahligen Wert eingeben!");
+				return true;
+			}
+			ItemStack item = new ItemStack(null, wert);
+			player.getInventory().addItem();
 			
 			return true;
 		}

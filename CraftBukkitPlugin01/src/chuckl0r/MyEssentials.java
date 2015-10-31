@@ -38,7 +38,7 @@ public class MyEssentials extends JavaPlugin
 		
 		commands.doCommand(sender, cmd, label, args);
 		
-		return false;
+		return true;
 	}
 
 }
