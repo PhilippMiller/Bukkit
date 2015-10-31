@@ -11,7 +11,10 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 import net.minecraft.server.v1_8_R3.Material;
@@ -278,8 +281,11 @@ public class MyEssentialsCommandExecutor
 				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Bitte " + ChatColor.DARK_RED + "\"tag\",\"nacht\" oder einen Ganzzahligen Wert eingeben!");
 				return true;
 			}
-			ItemStack item = new ItemStack(null, wert);
-			player.getInventory().addItem();
+			
+			ItemStack item = new ItemStack(null, 1);
+			ItemMeta itemMet = item.getItemMeta();
+			PlayerInventory inv = player.getInventory();
+			inv.addItem(new ItemStack(MaterialListe.STONE, 1));
 			
 			return true;
 		}

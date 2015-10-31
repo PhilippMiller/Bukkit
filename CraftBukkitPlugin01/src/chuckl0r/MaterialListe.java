@@ -1,4 +1,4 @@
-package org.bukkit;
+package chuckl0r;
 
 import java.lang.reflect.Constructor;
 import java.util.Map;
@@ -61,7 +61,7 @@ import com.google.common.collect.Maps;
 /**
  * An enum of all material IDs accepted by the official server and client
  */
-public enum Material {
+public enum MaterialListe {
     AIR(0, 0),
     STONE(1),
     GRASS(2),
@@ -417,32 +417,32 @@ public enum Material {
 
     private final int id;
     private final Constructor<? extends MaterialData> ctor;
-    private static Material[] byId = new Material[383];
-    private final static Map<String, Material> BY_NAME = Maps.newHashMap();
+    private static MaterialListe[] byId = new MaterialListe[383];
+    private final static Map<String, MaterialListe> BY_NAME = Maps.newHashMap();
     private final int maxStack;
     private final short durability;
 
-    private Material(final int id) {
+    private MaterialListe(final int id) {
         this(id, 64);
     }
 
-    private Material(final int id, final int stack) {
+    private MaterialListe(final int id, final int stack) {
         this(id, stack, MaterialData.class);
     }
 
-    private Material(final int id, final int stack, final int durability) {
+    private MaterialListe(final int id, final int stack, final int durability) {
         this(id, stack, durability, MaterialData.class);
     }
 
-    private Material(final int id, final Class<? extends MaterialData> data) {
+    private MaterialListe(final int id, final Class<? extends MaterialData> data) {
         this(id, 64, data);
     }
 
-    private Material(final int id, final int stack, final Class<? extends MaterialData> data) {
+    private MaterialListe(final int id, final int stack, final Class<? extends MaterialData> data) {
         this(id, stack, 0, data);
     }
 
-    private Material(final int id, final int stack, final int durability, final Class<? extends MaterialData> data) {
+    private MaterialListe(final int id, final int stack, final int durability, final Class<? extends MaterialData> data) {
         this.id = id;
         this.durability = (short) durability;
         this.maxStack = stack;
@@ -572,7 +572,7 @@ public enum Material {
      * @deprecated Magic value
      */
     @Deprecated
-    public static Material getMaterial(final int id) {
+    public static MaterialListe getMaterial(final int id) {
         if (byId.length > id && id >= 0) {
             return byId[id];
         } else {
@@ -589,7 +589,7 @@ public enum Material {
      * @param name Name of the material to get
      * @return Material if found, or null
      */
-    public static Material getMaterial(final String name) {
+    public static MaterialListe getMaterial(final String name) {
         return BY_NAME.get(name);
     }
 
@@ -605,10 +605,10 @@ public enum Material {
      * @param name Name of the material to get
      * @return Material if found, or null
      */
-    public static Material matchMaterial(final String name) {
+    public static MaterialListe matchMaterial(final String name) {
         Validate.notNull(name, "Name cannot be null");
 
-        Material result = null;
+        MaterialListe result = null;
 
         try {
             result = getMaterial(Integer.parseInt(name));
@@ -625,7 +625,7 @@ public enum Material {
     }
 
     static {
-        for (Material material : values()) {
+        for (MaterialListe material : values()) {
             if (byId.length > material.id) {
                 byId[material.id] = material;
             } else {
