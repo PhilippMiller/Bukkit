@@ -6,7 +6,7 @@ author: Chuckl0r
 commands:
     wispi:
         description: Der Whisper Befehl.
-        usage: /<command>
+        usage: /<command> [Player] [Nachricht]
         permission: chuckl0r.MyPlugin01.wispi
         permission-message: Du hast das Recht <permission> nicht!
     gmode:
@@ -16,7 +16,7 @@ commands:
         permission-message: Du hast das Recht <permission> nicht!
     tm:
         description: Zeit Manager.
-        usage: /<command> [time]
+        usage: /<command> [Zeit]
         permission: chuckl0r.MyPlugin01.time
         permission-message: Du hast das Recht <permission> nicht!
     MyEssentials:
