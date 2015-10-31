@@ -23,7 +23,7 @@ public class MyEssentials extends JavaPlugin
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		MyEssentialsCommandExecutor commands = new MyEssentialsCommandExecutor(this);
+		MyEssentialsCommandExecutor commands = new MyEssentialsCommandExecutor();
 		
 		commands.doCommand(sender, cmd, label, args);
 		
