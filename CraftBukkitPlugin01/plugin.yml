@@ -7,19 +7,24 @@ commands:
     wispi:
         description: Der Whisper Befehl.
         usage: /<command> [Player] [Nachricht]
-        permission: chuckl0r.MyPlugin01.wispi
+        permission: chuckl0r.MyEssentials.wispi
         permission-message: Du hast das Recht <permission> nicht!
     gmode:
         description: Der GameMode Changer.
         usage: /<command> ([GameMode / Spieler]) ([GameMode])
-        permission: chuckl0r.MyPlugin01.gamemode
+        permission: chuckl0r.MyEssentials.gamemode
         permission-message: Du hast das Recht <permission> nicht!
     tm:
         description: Zeit Manager.
         usage: /<command> [Zeit]
-        permission: chuckl0r.MyPlugin01.time
+        permission: chuckl0r.MyEssentials.time
         permission-message: Du hast das Recht <permission> nicht!
     MyEssentials:
         description: Plugin Info.
         usage: /<command> [info]
+    g:
+        description: Item adder.
+        usage: /<command> [itemId] [Menge]
+        permission: chuckl0r.MyEssentials.give
+        permission-message: Du hast das Recht <permission> nicht!
         

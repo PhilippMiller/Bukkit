@@ -1,6 +1,8 @@
 package chuckl0r;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -29,6 +31,7 @@ public class MyEssentialsCommandExecutor
 		this.plugin = plugin;
 	}
 	
+	@Deprecated
 	public boolean doCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
 		
@@ -269,25 +272,36 @@ public class MyEssentialsCommandExecutor
 			
 			return true;
 		}
+
+		//##################################
+		//######COMMAND "/g"#####
+		//##################################
+		
 		else if (cmd.getName().equals("g"))
 		{
-			int wert = 0;
-			try 
+			
+			try
 			{
-				wert = Integer.parseInt(args[0]);
+				int itemId = Integer.parseInt(args[0]);
+				int anzahl = Integer.parseInt(args[1]);
+				
+				
+				player.getInventory().addItem(new ItemStack(itemId, anzahl));				
+				
+				return true;
+				
 			}
 			catch (NumberFormatException e)
 			{
-				sender.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Bitte " + ChatColor.DARK_RED + "\"tag\",\"nacht\" oder einen Ganzzahligen Wert eingeben!");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.RED + "Diese ID kenne ich nicht!");
 				return true;
 			}
 			
-			ItemStack item = new ItemStack(null, 1);
-			ItemMeta itemMet = item.getItemMeta();
-			PlayerInventory inv = player.getInventory();
-			inv.addItem(new ItemStack(MaterialListe.STONE, 1));
+			//ItemStack item = new ItemStack(org.bukkit.Material.BOW, 1);
+			//player.getInventory().addItem(item);
 			
-			return true;
+			
+			//return true;
 		}
 		
 		//HIER WEITERE COMMANDS!
