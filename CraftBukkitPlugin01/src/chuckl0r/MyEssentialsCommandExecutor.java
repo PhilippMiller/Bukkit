@@ -51,14 +51,17 @@ public class MyEssentialsCommandExecutor {
 			this.wetter(sender, cmd, label, args);
 		}
 		else if (cmd.getName().equalsIgnoreCase("ws")){
+			if (args.length == 2) args[1] = args[0];
 			args[0] = "sonne";
 			this.wetter(sender, cmd, label, args);
 		}
 		else if (cmd.getName().equalsIgnoreCase("wr")){
+			if (args.length == 2) args[1] = args[0];
 			args[0] = "regen";
 			this.wetter(sender, cmd, label, args);
 		}
 		else if (cmd.getName().equalsIgnoreCase("wst")){
+			if (args.length == 2) args[1] = args[0];
 			args[0] = "sturm";
 			this.wetter(sender, cmd, label, args);
 		}
