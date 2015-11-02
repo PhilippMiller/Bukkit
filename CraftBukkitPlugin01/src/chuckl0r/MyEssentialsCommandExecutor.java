@@ -48,6 +48,7 @@ public class MyEssentialsCommandExecutor {
 		}
 
 		else if (cmd.getName().equalsIgnoreCase("w")) {
+			this.wetter(sender, cmd, label, args);
 		}
 
 		// HIER WEITERE COMMANDS!
