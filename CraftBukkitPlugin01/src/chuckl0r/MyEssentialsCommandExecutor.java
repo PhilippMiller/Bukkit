@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,61 +22,71 @@ public class MyEssentialsCommandExecutor {
 
 		// PLAYER CHECK
 		Player player = (Player) sender;
-		
+
 		if (!(sender instanceof Player)) {
 			player.sendMessage(ChatColor.RED + "Du musst ein Spieler sein!");
 			return true;
 		}
 
-		if (cmd.getName().equals("wispi")) {
+		if (cmd.getName().equalsIgnoreCase("wispi")) {
 			this.wispi(sender, cmd, label, args);
 		}
 
-		else if (cmd.getName().equals("gmode")) {
+		else if (cmd.getName().equalsIgnoreCase("gmode")) {
 			this.gmode(sender, cmd, label, args);
 		}
 
-		else if (cmd.getName().equals("tm")) {
+		else if (cmd.getName().equalsIgnoreCase("tm")) {
 			this.timeManager(sender, cmd, label, args);
 		}
 
-		else if (cmd.getName().equals("MyEssentials")) {
+		else if (cmd.getName().equalsIgnoreCase("MyEssentials")) {
 			this.MyEssentails(sender, cmd, label, args);
 		}
 
-		else if (cmd.getName().equals("g")) {
+		else if (cmd.getName().equalsIgnoreCase("g")) {
 			this.give(sender, cmd, label, args);
 		}
 
 		else if (cmd.getName().equalsIgnoreCase("w")) {
 			this.wetter(sender, cmd, label, args);
-		}
-		else if (cmd.getName().equalsIgnoreCase("ws")){
-			if (args.length == 1){
+		} else if (cmd.getName().equalsIgnoreCase("ws")) {
+			if (args.length == 1) {
 				String args0Inhalt = args[0];
 				args = new String[2];
 				args[1] = args0Inhalt;
+			}
+			if (args.length == 0) {
+				args = new String[1];
 			}
 			args[0] = "sonne";
 			this.wetter(sender, cmd, label, args);
-		}
-		else if (cmd.getName().equalsIgnoreCase("wr")){
-			if (args.length == 1){
+		} else if (cmd.getName().equalsIgnoreCase("wr")) {
+			if (args.length == 1) {
 				String args0Inhalt = args[0];
 				args = new String[2];
 				args[1] = args0Inhalt;
+			}
+			if (args.length == 0) {
+				args = new String[1];
 			}
 			args[0] = "regen";
 			this.wetter(sender, cmd, label, args);
-		}
-		else if (cmd.getName().equalsIgnoreCase("wst")){
-			if (args.length == 1){
+		} else if (cmd.getName().equalsIgnoreCase("wst")) {
+			if (args.length == 1) {
 				String args0Inhalt = args[0];
 				args = new String[2];
 				args[1] = args0Inhalt;
 			}
+			if (args.length == 0) {
+				args = new String[1];
+			}
 			args[0] = "sturm";
 			this.wetter(sender, cmd, label, args);
+		}
+
+		else if (cmd.getName().equalsIgnoreCase("tel")) {
+			this.teleport(sender, cmd, label, args);
 		}
 
 		// HIER WEITERE COMMANDS!
@@ -357,15 +368,14 @@ public class MyEssentialsCommandExecutor {
 			return true;
 		} else if (args.length >= 1) {
 			World world = player.getWorld();
-			int zeitraum = 10000; 
-			if (args.length == 2)
-			{
-				try
-				{
+			int zeitraum = 10000;
+			if (args.length == 2) {
+				try {
 					zeitraum = Integer.parseInt(args[1]);
 					return true;
 				} catch (NumberFormatException e) {
-					player.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.RED + "Diesen Zeitraum kenne ich nicht!");
+					player.sendMessage(
+							ChatColor.GOLD + "[MyEssentials] " + ChatColor.RED + "Diesen Zeitraum kenne ich nicht!");
 					return true;
 				}
 			}
@@ -387,7 +397,7 @@ public class MyEssentialsCommandExecutor {
 				world.setThundering(true);
 				world.setStorm(true);
 				world.setWeatherDuration(zeitraum);
-				int sturmZeit = (int) (zeitraum*0.8);
+				int sturmZeit = (int) (zeitraum * 0.8);
 				world.setThunderDuration(sturmZeit);
 				player.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.GREEN + "Jetzt kommt ein "
 						+ ChatColor.DARK_GREEN + "Gewitter" + ChatColor.GREEN + ".");
@@ -401,4 +411,97 @@ public class MyEssentialsCommandExecutor {
 		return false;
 	}
 
+	@Deprecated
+	public boolean teleport(CommandSender sender, Command cmd, String label, String[] args) {
+		// ##################################
+		// ######COMMAND "/tel"##############
+		// ##################################
+		Player player = (Player) sender;
+		OfflinePlayerCheck offlinePlayer = new OfflinePlayerCheck();
+		if (args.length == 1) {
+			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
+			otherPlayer = offlinePlayer.otherPlayer;
+			if (otherPlayer != null) {
+				float blockX = otherPlayer.getLocation().getBlockX();
+				float blockY = otherPlayer.getLocation().getBlockY();
+				float blockZ = otherPlayer.getLocation().getBlockZ();
+				float blockPitch = otherPlayer.getLocation().getPitch();
+				float blockYaw = otherPlayer.getLocation().getYaw();
+				World w = otherPlayer.getWorld();
+
+				Location loc = new Location(w, blockX, blockY, blockZ);
+				loc.setPitch(blockPitch);
+				loc.setYaw(blockYaw);
+
+				player.teleport(loc);
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN
+						+ "Erfolgreich zur Position von " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN
+						+ " teleportiert." + ChatColor.GRAY + " @ X:" + (int)blockX + " Y:" + (int)blockY + " Z:" + (int)blockZ);
+				return true;
+			} else {
+				player.sendMessage(
+						ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Dieser Player ist leider nicht online!");
+				return true;
+			}
+		} else if (args.length == 3) {
+			try {
+				float blockX = Float.parseFloat(args[0]);
+				float blockY = Float.parseFloat(args[1]);
+				float blockZ = Float.parseFloat(args[2]);
+				float blockPitch = player.getLocation().getPitch();
+				float blockYaw = player.getLocation().getYaw();
+				World w = player.getWorld();
+
+				Location loc = new Location(w, blockX, blockY, blockZ);
+				loc.setPitch(blockPitch);
+				loc.setYaw(blockYaw);
+
+				player.teleport(loc);
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN
+						+ "Erfolgreich zur Position teleportiert." + ChatColor.GRAY + " @ X:" + (int)blockX + " Y:" + (int)blockY + " Z:" + (int)blockZ);
+				return true;
+			} catch (NumberFormatException e) {
+				player.sendMessage(
+						ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Dies sind keine gültigen Koordinaten!");
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "/tel [X] [Y] [Z]");
+				return true;
+			}
+		} else if (args.length == 4) {
+			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
+			otherPlayer = offlinePlayer.otherPlayer;
+			if (otherPlayer != null) {
+
+				try {
+					float blockX = Float.parseFloat(args[1]);
+					float blockY = Float.parseFloat(args[2]);
+					float blockZ = Float.parseFloat(args[3]);
+					float blockPitch = player.getLocation().getPitch();
+					float blockYaw = player.getLocation().getYaw();
+					World w = player.getWorld();
+
+					Location loc = new Location(w, blockX, blockY, blockZ);
+					loc.setPitch(blockPitch);
+					loc.setYaw(blockYaw);
+
+					player.teleport(loc);
+					player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN
+							+ "Erfolgreich zur Position von " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN
+							+ " teleportiert." + ChatColor.GRAY + " @ X:" + (int)blockX + " Y:" + (int)blockY + " Z:" + (int)blockZ);
+					return true;
+				} catch (NumberFormatException e) {
+					player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED
+							+ "Dies sind keine gültigen Koordinaten!");
+					player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "/tel [User] [X] [Y] [Z]");
+					return true;
+				}
+			} else {
+
+			}
+			player.sendMessage(
+					ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Dieser Player ist leider nicht online!");
+			return true;
+		}
+
+		return false;
+	}
 }

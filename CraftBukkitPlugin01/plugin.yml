@@ -47,3 +47,8 @@ commands:
         usage: /<command>
         permission: chuckl0r.MyEssentials.wetter.sturm
         permission-message: Du hast das Recht <permission> nicht!
+    tel:
+        description: Wetter Manager.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.teleport
+        permission-message: Du hast das Recht <permission> nicht!
