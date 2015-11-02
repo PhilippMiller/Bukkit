@@ -557,13 +557,13 @@ public class MyEssentialsCommandExecutor {
 			player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "/crazy [on | off]");
 		} else if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("off")) {
-				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Bis bald " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Willkommen zurück " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
 				player.setDisplayName(player.getName());
 				player.setPlayerListName(player.getName());
 			} else if (args[0].equalsIgnoreCase("on")) {
 				player.setDisplayName(ChatColor.MAGIC + player.getName() + ChatColor.RESET);
 				player.setPlayerListName(ChatColor.MAGIC + player.getName() + ChatColor.RESET);
-				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Willkommen zurück " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Bis bald " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
 			} else {
 				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "/crazy [on | off]");
 			}
