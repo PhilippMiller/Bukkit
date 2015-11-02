@@ -27,4 +27,8 @@ commands:
         usage: /<command> [itemId] [Menge]
         permission: chuckl0r.MyEssentials.give
         permission-message: Du hast das Recht <permission> nicht!
-        
+    w:
+        description: Wetter Manager.
+        usage: /<command> [Wetter]
+        permission: chuckl0r.MyEssentials.wetter
+        permission-message: Du hast das Recht <permission> nicht!

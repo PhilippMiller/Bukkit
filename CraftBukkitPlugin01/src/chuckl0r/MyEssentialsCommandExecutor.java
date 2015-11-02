@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -251,7 +252,7 @@ public class MyEssentialsCommandExecutor {
 					int itemId = Integer.parseInt(args[0]);
 					int anzahl = 1;
 
-					if (args.length == 2) {
+					if (args.length >= 2) {
 						anzahl = Integer.parseInt(args[1]);
 					}
 
@@ -267,11 +268,46 @@ public class MyEssentialsCommandExecutor {
 
 			}
 
-			// HIER WEITERE COMMANDS!
-
 			return false;
 		}
-		
+
+		// ##################################
+		// ######COMMAND "/w"################
+		// ##################################
+		else if (cmd.getName().equalsIgnoreCase("w")) {
+
+			if (args.length == 0) {
+				sender.sendMessage(
+						ChatColor.GOLD + "[MyEssentials] " + ChatColor.RED + "Bitte Wetter eingeben: /w [Wetter]");
+				sender.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.RED + "Wetter: \"sonne\", \"regen\", \"sturm\"");
+			} else if (args.length >= 1) {
+				World world = player.getWorld();
+				if (args[0].equalsIgnoreCase("sonne")) {
+					world.setThundering(false);
+					world.setStorm(false);
+					world.setWeatherDuration(10000);
+					sender.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.GREEN + "Jetzt kommt " + ChatColor.DARK_GREEN + "Sonne" + ChatColor.GREEN + ".");
+					
+				}else if (args[0].equalsIgnoreCase("regen")){
+					world.setThundering(false);
+					world.setStorm(true);
+					world.setWeatherDuration(10000);
+					sender.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.GREEN + "Jetzt kommt " + ChatColor.DARK_GREEN + "Regen" + ChatColor.GREEN + ".");
+				}
+				else if (args[0].equalsIgnoreCase("sturm")){
+					world.setThundering(true);
+					world.setStorm(true);
+					world.setWeatherDuration(10000);
+					world.setThunderDuration(8000);
+					sender.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.GREEN + "Jetzt kommt ein " + ChatColor.DARK_GREEN + "Gewitter" + ChatColor.GREEN + ".");
+				}
+
+			}
+
+		}
+
+		// HIER WEITERE COMMANDS!
+
 		return false;
 	}
 }
