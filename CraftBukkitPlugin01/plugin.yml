@@ -52,3 +52,13 @@ commands:
         usage: /<command>
         permission: chuckl0r.MyEssentials.teleport
         permission-message: Du hast das Recht <permission> nicht!
+    h:
+        description: Der Heiler.
+        usage: /<command> ([Spieler])
+        permission: chuckl0r.MyEssentials.heal
+        permission-message: Du hast das Recht <permission> nicht!
+    crazy:
+        description: Crazy Name.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.crazy
+        permission-message: Du hast das Recht <permission> nicht!

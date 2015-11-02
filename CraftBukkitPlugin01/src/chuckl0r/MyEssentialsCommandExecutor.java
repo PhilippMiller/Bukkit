@@ -89,6 +89,12 @@ public class MyEssentialsCommandExecutor {
 			this.teleport(sender, cmd, label, args);
 		}
 
+		else if (cmd.getName().equalsIgnoreCase("h")) {
+			this.heilen(sender, cmd, label, args);
+		} else if (cmd.getName().equalsIgnoreCase("crazy")) {
+			this.crazyName(sender, cmd, label, args);
+		}
+
 		// HIER WEITERE COMMANDS!
 
 		return false;
@@ -435,12 +441,13 @@ public class MyEssentialsCommandExecutor {
 
 				player.teleport(loc);
 				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN
-						+ "Erfolgreich zur Position von " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN
-						+ " teleportiert." + ChatColor.GRAY + " @ X:" + (int)blockX + " Y:" + (int)blockY + " Z:" + (int)blockZ);
+						+ "Erfolgreich zur Position von " + ChatColor.DARK_GREEN + otherPlayer.getName()
+						+ ChatColor.GREEN + " teleportiert." + ChatColor.GRAY + " @ X:" + (int) blockX + " Y:"
+						+ (int) blockY + " Z:" + (int) blockZ);
 				return true;
 			} else {
-				player.sendMessage(
-						ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Dieser Player ist leider nicht online!");
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED
+						+ "Dieser Spieler ist leider nicht online!");
 				return true;
 			}
 		} else if (args.length == 3) {
@@ -458,7 +465,8 @@ public class MyEssentialsCommandExecutor {
 
 				player.teleport(loc);
 				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN
-						+ "Erfolgreich zur Position teleportiert." + ChatColor.GRAY + " @ X:" + (int)blockX + " Y:" + (int)blockY + " Z:" + (int)blockZ);
+						+ "Erfolgreich zur Position teleportiert." + ChatColor.GRAY + " @ X:" + (int) blockX + " Y:"
+						+ (int) blockY + " Z:" + (int) blockZ);
 				return true;
 			} catch (NumberFormatException e) {
 				player.sendMessage(
@@ -485,8 +493,9 @@ public class MyEssentialsCommandExecutor {
 
 					player.teleport(loc);
 					player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN
-							+ "Erfolgreich zur Position von " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN
-							+ " teleportiert." + ChatColor.GRAY + " @ X:" + (int)blockX + " Y:" + (int)blockY + " Z:" + (int)blockZ);
+							+ "Erfolgreich zur Position von " + ChatColor.DARK_GREEN + otherPlayer.getName()
+							+ ChatColor.GREEN + " teleportiert." + ChatColor.GRAY + " @ X:" + (int) blockX + " Y:"
+							+ (int) blockY + " Z:" + (int) blockZ);
 					return true;
 				} catch (NumberFormatException e) {
 					player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED
@@ -498,8 +507,66 @@ public class MyEssentialsCommandExecutor {
 
 			}
 			player.sendMessage(
-					ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Dieser Player ist leider nicht online!");
+					ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "Dieser Spieler ist leider nicht online!");
 			return true;
+		}
+
+		return false;
+	}
+
+	@Deprecated
+	public boolean heilen(CommandSender sender, Command cmd, String label, String[] args) {
+		// ##################################
+		// ######COMMAND "/h"################
+		// ##################################
+		Player player = (Player) sender;
+
+		if (args.length == 0) {
+			player.setHealth(20);
+			player.setFoodLevel(20);
+			player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Du hast dich geheilt.");
+			return true;
+		} else if (args.length >= 1) {
+			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
+			otherPlayer = offlinePlayer.otherPlayer;
+
+			if (otherPlayer != null) {
+				otherPlayer.setHealth(20);
+				otherPlayer.setFoodLevel(20);
+				otherPlayer.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.DARK_GREEN + player.getName()
+						+ ChatColor.GREEN + " hat dich geheilt!");
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Du hast "
+						+ ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " geheilt.");
+				return true;
+			} else {
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED
+						+ "Dieser Spieler ist leider nicht online!");
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean crazyName(CommandSender sender, Command cmd, String label, String[] args) {
+		// ##################################
+		// ######COMMAND "/crazy"############
+		// ##################################
+		Player player = (Player) sender;
+		if (args.length == 0) {
+			player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "/crazy [on | off]");
+		} else if (args.length >= 1) {
+			if (args[0].equalsIgnoreCase("off")) {
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Bis bald " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
+				player.setDisplayName(player.getName());
+				player.setPlayerListName(player.getName());
+			} else if (args[0].equalsIgnoreCase("on")) {
+				player.setDisplayName(ChatColor.MAGIC + player.getName() + ChatColor.RESET);
+				player.setPlayerListName(ChatColor.MAGIC + player.getName() + ChatColor.RESET);
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.GREEN + "Willkommen zurück " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
+			} else {
+				player.sendMessage(ChatColor.GOLD + "[MyEssentials]: " + ChatColor.RED + "/crazy [on | off]");
+			}
 		}
 
 		return false;
