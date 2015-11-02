@@ -50,6 +50,18 @@ public class MyEssentialsCommandExecutor {
 		else if (cmd.getName().equalsIgnoreCase("w")) {
 			this.wetter(sender, cmd, label, args);
 		}
+		else if (cmd.getName().equalsIgnoreCase("ws")){
+			args[0] = "sonne";
+			this.wetter(sender, cmd, label, args);
+		}
+		else if (cmd.getName().equalsIgnoreCase("wr")){
+			args[0] = "regen";
+			this.wetter(sender, cmd, label, args);
+		}
+		else if (cmd.getName().equalsIgnoreCase("wst")){
+			args[0] = "sturm";
+			this.wetter(sender, cmd, label, args);
+		}
 
 		// HIER WEITERE COMMANDS!
 
@@ -330,25 +342,38 @@ public class MyEssentialsCommandExecutor {
 			return true;
 		} else if (args.length >= 1) {
 			World world = player.getWorld();
+			int zeitraum = 10000; 
+			if (args.length == 2)
+			{
+				try
+				{
+					zeitraum = Integer.parseInt(args[1]);
+					return true;
+				} catch (NumberFormatException e) {
+					player.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.RED + "Diesen Zeitraum kenne ich nicht!");
+					return true;
+				}
+			}
 			if (args[0].equalsIgnoreCase("sonne")) {
 				world.setThundering(false);
 				world.setStorm(false);
-				world.setWeatherDuration(10000);
+				world.setWeatherDuration(zeitraum);
 				player.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.GREEN + "Jetzt kommt "
 						+ ChatColor.DARK_GREEN + "Sonne" + ChatColor.GREEN + ".");
 				return true;
 			} else if (args[0].equalsIgnoreCase("regen")) {
 				world.setThundering(false);
 				world.setStorm(true);
-				world.setWeatherDuration(10000);
+				world.setWeatherDuration(zeitraum);
 				player.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.GREEN + "Jetzt kommt "
 						+ ChatColor.DARK_GREEN + "Regen" + ChatColor.GREEN + ".");
 				return true;
 			} else if (args[0].equalsIgnoreCase("sturm")) {
 				world.setThundering(true);
 				world.setStorm(true);
-				world.setWeatherDuration(10000);
-				world.setThunderDuration(8000);
+				world.setWeatherDuration(zeitraum);
+				int sturmZeit = (int) (zeitraum*0.8);
+				world.setThunderDuration(sturmZeit);
 				player.sendMessage(ChatColor.GOLD + "[MyEssentials] " + ChatColor.GREEN + "Jetzt kommt ein "
 						+ ChatColor.DARK_GREEN + "Gewitter" + ChatColor.GREEN + ".");
 				return true;

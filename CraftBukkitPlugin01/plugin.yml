@@ -32,3 +32,18 @@ commands:
         usage: /<command> [Wetter]
         permission: chuckl0r.MyEssentials.wetter
         permission-message: Du hast das Recht <permission> nicht!
+    ws:
+        description: Wetter Manager.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.wetter.sonne
+        permission-message: Du hast das Recht <permission> nicht!
+    wr:
+        description: Wetter Manager.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.wetter.regen
+        permission-message: Du hast das Recht <permission> nicht!
+    wst:
+        description: Wetter Manager.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.wetter.sturm
+        permission-message: Du hast das Recht <permission> nicht!
