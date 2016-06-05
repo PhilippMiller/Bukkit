@@ -1,0 +1,11 @@
+name: Admin Commands
+main: com.gamer_point.chuckl0r.main.AdminCommands
+version: 1.0.0-Beta
+author: Chuckl0r
+
+commands:
+    help:
+        description: Zeigt diese Info an.
+        usage: /<command>
+        permission: chuckl0r.AdminCommand.help
+        permission-message: Du hast das Recht <permission> nicht!
