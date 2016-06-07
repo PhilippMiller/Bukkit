@@ -147,8 +147,14 @@ public class MyEssentialsCommandExecutor {
 	}
 
 	public boolean godMode(CommandSender sender, Command cmd, String label, String[] args) {
+		// ##################################
+		// ######COMMAND "/god"############
+		// ##################################
 		Player player = (Player) sender;
+		World world = player.getWorld();
+		
 		if (player.isInvulnerable()) {
+			world.strikeLightningEffect(player.getLocation());
 			player.setInvulnerable(false);
 			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
 					+ "Du bist nun " + ChatColor.DARK_GREEN + "Sterblich" + ChatColor.GREEN + "!");
@@ -156,6 +162,7 @@ public class MyEssentialsCommandExecutor {
 		}
 		else {
 			player.setInvulnerable(true);
+			world.strikeLightningEffect(player.getLocation());
 			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
 					+ "Du bist nun " + ChatColor.DARK_GREEN + "Unverwundbar" + ChatColor.GREEN + "!");
 			return true;

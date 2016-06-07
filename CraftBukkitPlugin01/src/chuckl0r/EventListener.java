@@ -32,7 +32,7 @@ public class EventListener implements Listener {
 		if (player.isInvulnerable())
 			event.setCancelled(true);
 	}
-	
+
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
@@ -51,14 +51,44 @@ public class EventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onSignEdit(SignChangeEvent e) {
-		Block b = e.getBlock();
-		if (b.getType() == Material.SIGN || b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN) {
-			Sign sign = (Sign) b.getState();
-			if (sign.getLine(0).equalsIgnoreCase("[Redstone]")) {
-				sign.setLine(0, ChatColor.DARK_RED + "[RedStone]");
-				sign.update();
-				e.getPlayer().sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GRAY
-						+ "Erfolgreich " + ChatColor.DARK_RED + "[RedStone]" + ChatColor.GRAY + " erstellt.");
+		Bukkit.broadcastMessage(e.getLine(0));
+		if (e.getLine(0).equalsIgnoreCase("[Redstone]")) {
+			e.setLine(0, ChatColor.DARK_RED + "[RedStone]");
+
+			String xyz = e.getLine(1).trim();
+			String splittedXYZ[] = xyz.split(",");
+			String x = splittedXYZ[0];
+			String y = splittedXYZ[1];
+			String z = splittedXYZ[2];
+			try {
+				if (x.equals("") || y.equals("") || z.equals(""))
+					throw new NumberFormatException();
+
+				int CorX = Integer.parseInt(x);
+				int CorY = Integer.parseInt(y);
+				int CorZ = Integer.parseInt(z);
+
+				World world = e.getBlock().getWorld();
+				Block block = world.getBlockAt(CorX, CorY, CorZ);
+
+				if (block.getType() != Material.AIR && block.getType() != Material.REDSTONE_TORCH_ON) {
+					e.setLine(1, x + "," + y + "," + z);
+					e.setLine(3, ChatColor.RED + "[OFF] " + ChatColor.DARK_GRAY + "Blocked!");
+				} else {
+					e.setLine(1, x + "," + y + "," + z);
+					e.setLine(3, ChatColor.RED + "[OFF]");
+				}
+
+				e.getPlayer()
+						.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GRAY
+								+ "Erfolgreich " + ChatColor.DARK_RED + "[RedStone]" + ChatColor.GRAY + " Schild für "
+								+ ChatColor.DARK_RED + "X:" + x + ChatColor.GRAY + "," + ChatColor.DARK_RED + " Y:" + y
+								+ ChatColor.GRAY + "," + ChatColor.DARK_RED + " Z:" + z + ChatColor.RESET
+								+ ChatColor.GRAY + " erstellt.");
+			} catch (NumberFormatException ex) {
+				e.setLine(1, "X,Y,Z");
+				e.setLine(2, "");
+				e.setLine(3, ChatColor.RED + "FAIL");
 			}
 		}
 	}
