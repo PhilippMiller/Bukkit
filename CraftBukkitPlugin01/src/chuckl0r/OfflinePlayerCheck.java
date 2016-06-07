@@ -1,35 +1,31 @@
 package chuckl0r;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class OfflinePlayerCheck
 {
-	Player otherPlayer = null;
+	private Player otherPlayer = null;
 	
-	@Deprecated
+	
 	public boolean OfflinePlayerChecker(CommandSender sender, String theOtherOne)
 	{
 		
 		//OFFLINE PLAYER CHECK
-		
-		UUID anOther = Bukkit.getPlayer(theOtherOne).getUniqueId();
-		
-		OfflinePlayer other = Bukkit.getServer().getOfflinePlayer(anOther);
-		if (other.isOnline())
-		{
-			otherPlayer = (Player) other;
+		@SuppressWarnings ("deprecation")
+		Player theOterhPlayer = Bukkit.getServer().getPlayer(theOtherOne);
+		if (theOterhPlayer.isOnline()) {
+			otherPlayer = theOterhPlayer;
 			return true;
-		}
-		else
-		{
+		} else {
 			otherPlayer = null;
-			return true;
+			return false;
 		}
+	}
+	
+	public Player getOtherPlayer() {
+		return this.otherPlayer;
 	}
 	
 }
