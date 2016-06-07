@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -44,6 +45,46 @@ public class EventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onRedstone(BlockRedstoneEvent e) {
+		Block b = e.getBlock();
+		if (b.getType() == Material.SIGN || b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN) {
+			Sign sign = (Sign) b.getState();
+			String signLine0 = sign.getLine(0);
+			
+			if (signLine0.equalsIgnoreCase("[Gate]")) {
+				gateFunktionality(e);
+			} else if (signLine0.equalsIgnoreCase("[Redstone]")) {
+				redStoneAtXYZFunktionality(e, sign);
+			}
+		}
+	}
+
+	private void redStoneAtXYZFunktionality(BlockRedstoneEvent e, Sign sign) {
+		String xyz = sign.getLine(2).trim();
+		String splittedXYZ[] = xyz.split(",");
+		String x = splittedXYZ[0];
+		String y = splittedXYZ[0];
+		String z = splittedXYZ[0];
+		
+		try {
+			int CorX = Integer.parseInt(x);
+			int CorY = Integer.parseInt(y);
+			int CorZ = Integer.parseInt(z);
+			
+			World world = e.getBlock().getWorld();
+			Block block = world.getBlockAt(CorX, CorY, CorX);
+			if (block.getType() != Material.AIR) {
+				
+			}
+			sign.setLine(4, x + y + z);
+			sign.update();
+			
+		} catch (NumberFormatException ex) {
+			sign.setLine(2, "X,Y,Z");
+			sign.setLine(4, "Y");
+		}
+	}
+
+	private void gateFunktionality(BlockRedstoneEvent e) {
 		Block b = e.getBlock();
 		ArrayList<Block> blockHitList = new ArrayList<Block>();
 
@@ -109,12 +150,13 @@ public class EventListener implements Listener {
 
 							for (Block anotherBlock : moreBlocksAround) {
 								for (BlockFace face : blockFaces_NESW) {
-									
+
 									if (anotherBlock.getRelative(face).getType() == Material.FENCE) {
 										blocksAround.add(anotherBlock.getRelative(face));
 										Block nextBlock = anotherBlock.getRelative(face);
 										while (nextBlock.getType() == Material.FENCE) {
-											Bukkit.broadcastMessage("(1) NextBlock @" + face + " X: " + nextBlock.getX()+ " Y: " + nextBlock.getY()+ " Z: " + nextBlock.getZ());
+											Bukkit.broadcastMessage("(1) NextBlock @" + face + " X: " + nextBlock.getX()
+													+ " Y: " + nextBlock.getY() + " Z: " + nextBlock.getZ());
 											blocksAround.add(nextBlock.getRelative(face));
 											nextBlock = nextBlock.getRelative(face);
 										}
@@ -139,7 +181,8 @@ public class EventListener implements Listener {
 										blocksAround.add(anotherBlock.getRelative(face));
 										Block nextBlock = anotherBlock.getRelative(face);
 										while (nextBlock.getType() == Material.FENCE) {
-											Bukkit.broadcastMessage("(2) NextBlock @" + face + " X: " + nextBlock.getX()+ " Y: " + nextBlock.getY()+ " Z: " + nextBlock.getZ());
+											Bukkit.broadcastMessage("(2) NextBlock @" + face + " X: " + nextBlock.getX()
+													+ " Y: " + nextBlock.getY() + " Z: " + nextBlock.getZ());
 											blocksAround.add(nextBlock.getRelative(face));
 											nextBlock = nextBlock.getRelative(face);
 										}
@@ -167,7 +210,8 @@ public class EventListener implements Listener {
 										blocksAround.add(anotherBlock.getRelative(face));
 										Block nextBlock = anotherBlock.getRelative(face);
 										while (nextBlock.getType() == Material.FENCE) {
-											Bukkit.broadcastMessage("(3) NextBlock @" + face + " X: " + nextBlock.getX()+ " Y: " + nextBlock.getY()+ " Z: " + nextBlock.getZ());
+											Bukkit.broadcastMessage("(3) NextBlock @" + face + " X: " + nextBlock.getX()
+													+ " Y: " + nextBlock.getY() + " Z: " + nextBlock.getZ());
 											blocksAround.add(nextBlock.getRelative(face));
 											nextBlock = nextBlock.getRelative(face);
 										}
@@ -230,29 +274,11 @@ public class EventListener implements Listener {
 									}
 								}
 							}
-
-							/*
-							 * for (Block aBlock : blocksAround) { Block
-							 * deeperBlock = aBlock; for (int i = 0; i < 10;
-							 * i++) { if
-							 * (deeperBlock.getRelative(BlockFace.DOWN).getType(
-							 * ) == Material.FENCE) { deeperBlock =
-							 * deeperBlock.getRelative(BlockFace.DOWN); } else
-							 * if(deeperBlock.getType() != Material.AIR){ if
-							 * (deeperBlock.getY() == aBlock.getY()) { continue;
-							 * } else { deeperBlock.setType(Material.AIR);
-							 * deeperBlock.getState().update();
-							 * 
-							 * 
-							 * 
-							 * deeperBlock.getRelative(BlockFace.UP); } } } }
-							 */
 						}
 					}
 				}
 			}
 		}
-
 	}
 
 	@SuppressWarnings("deprecation")
