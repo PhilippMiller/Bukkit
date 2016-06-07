@@ -15,11 +15,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.material.Directional;
-
-import net.minecraft.server.v1_9_R2.PlayerInteractManager;
 
 public class EventListener implements Listener {
 
@@ -44,43 +42,101 @@ public class EventListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onRedstone(BlockRedstoneEvent e) {
+	public void onSignEdit(SignChangeEvent e) {
 		Block b = e.getBlock();
 		if (b.getType() == Material.SIGN || b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN) {
 			Sign sign = (Sign) b.getState();
-			String signLine0 = sign.getLine(0);
-			
-			if (signLine0.equalsIgnoreCase("[Gate]")) {
-				gateFunktionality(e);
-			} else if (signLine0.equalsIgnoreCase("[Redstone]")) {
-				redStoneAtXYZFunktionality(e, sign);
+			if (sign.getLine(0).equalsIgnoreCase("[Redstone]")) {
+				sign.setLine(0, ChatColor.DARK_RED + "[RedStone]");
+				sign.update();
+				e.getPlayer().sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GRAY
+						+ "Erfolgreich " + ChatColor.DARK_RED + "[RedStone]" + ChatColor.GRAY + " erstellt.");
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onRedstone(BlockRedstoneEvent e) {
+		Block b = e.getBlock();
+		ArrayList<Block> blocksAround = new ArrayList<Block>();
+		blocksAround.add(b);
+
+		ArrayList<BlockFace> blockFaces = new ArrayList<BlockFace>();
+		blockFaces.add(BlockFace.UP);
+		blockFaces.add(BlockFace.NORTH);
+		blockFaces.add(BlockFace.EAST);
+		blockFaces.add(BlockFace.SOUTH);
+		blockFaces.add(BlockFace.WEST);
+
+		ArrayList<Sign> signList = new ArrayList<Sign>();
+
+		for (Block block : blocksAround) {
+			for (BlockFace face : blockFaces) {
+				Block meanedBlock = block.getRelative(face);
+				if (meanedBlock.getType() == Material.SIGN || meanedBlock.getType() == Material.SIGN_POST
+						|| meanedBlock.getType() == Material.WALL_SIGN) {
+					signList.add((Sign) meanedBlock.getState());
+				}
+			}
+		}
+
+		if (!signList.isEmpty()) {
+			for (Sign sign : signList) {
+				String signLine0 = sign.getLine(0);
+				if (signLine0.equalsIgnoreCase("[Gate]")) {
+					gateFunktionality(e);
+				} else if (signLine0.equalsIgnoreCase("[Redstone]")
+						|| signLine0.equalsIgnoreCase(ChatColor.DARK_RED + "[Redstone]")) {
+					redStoneAtXYZFunktionality(e, sign);
+				}
 			}
 		}
 	}
 
 	private void redStoneAtXYZFunktionality(BlockRedstoneEvent e, Sign sign) {
-		String xyz = sign.getLine(2).trim();
+		String xyz = sign.getLine(1).trim();
 		String splittedXYZ[] = xyz.split(",");
 		String x = splittedXYZ[0];
-		String y = splittedXYZ[0];
-		String z = splittedXYZ[0];
-		
+		String y = splittedXYZ[1];
+		String z = splittedXYZ[2];
 		try {
+			if (x.equals("") || y.equals("") || z.equals(""))
+				throw new NumberFormatException();
+
 			int CorX = Integer.parseInt(x);
 			int CorY = Integer.parseInt(y);
 			int CorZ = Integer.parseInt(z);
-			
+
 			World world = e.getBlock().getWorld();
-			Block block = world.getBlockAt(CorX, CorY, CorX);
-			if (block.getType() != Material.AIR) {
-				
+			Block block = world.getBlockAt(CorX, CorY, CorZ);
+
+			if (e.getNewCurrent() >= 1 && e.getOldCurrent() == 0) {
+				if (block.getType() != Material.AIR && block.getType() != Material.REDSTONE_TORCH_ON) {
+					sign.setLine(0, ChatColor.DARK_RED + "[RedStone]");
+					sign.setLine(1, x + "," + y + "," + z);
+					sign.setLine(3, ChatColor.RED + "OFF" + ChatColor.DARK_GRAY + "Block im Weg!");
+				} else {
+					block.setType(Material.REDSTONE_TORCH_ON);
+					block.getState().update();
+
+					if (!sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_RED + "[RedStone]"))
+						sign.setLine(0, ChatColor.DARK_RED + "[RedStone]");
+					sign.setLine(3, ChatColor.GREEN + "[ON]");
+				}
+			} else {
+				if (block.getType() == Material.REDSTONE_TORCH_ON) {
+					block.setType(Material.AIR);
+					block.getState().update();
+
+					sign.setLine(3, ChatColor.RED + "[OFF]");
+				}
 			}
-			sign.setLine(4, x + y + z);
 			sign.update();
-			
 		} catch (NumberFormatException ex) {
-			sign.setLine(2, "X,Y,Z");
-			sign.setLine(4, "Y");
+			sign.setLine(1, "X,Y,Z");
+			sign.setLine(2, "");
+			sign.setLine(3, ChatColor.RED + "FAIL");
+			sign.update();
 		}
 	}
 
@@ -155,8 +211,6 @@ public class EventListener implements Listener {
 										blocksAround.add(anotherBlock.getRelative(face));
 										Block nextBlock = anotherBlock.getRelative(face);
 										while (nextBlock.getType() == Material.FENCE) {
-											Bukkit.broadcastMessage("(1) NextBlock @" + face + " X: " + nextBlock.getX()
-													+ " Y: " + nextBlock.getY() + " Z: " + nextBlock.getZ());
 											blocksAround.add(nextBlock.getRelative(face));
 											nextBlock = nextBlock.getRelative(face);
 										}
@@ -181,8 +235,6 @@ public class EventListener implements Listener {
 										blocksAround.add(anotherBlock.getRelative(face));
 										Block nextBlock = anotherBlock.getRelative(face);
 										while (nextBlock.getType() == Material.FENCE) {
-											Bukkit.broadcastMessage("(2) NextBlock @" + face + " X: " + nextBlock.getX()
-													+ " Y: " + nextBlock.getY() + " Z: " + nextBlock.getZ());
 											blocksAround.add(nextBlock.getRelative(face));
 											nextBlock = nextBlock.getRelative(face);
 										}
@@ -210,8 +262,6 @@ public class EventListener implements Listener {
 										blocksAround.add(anotherBlock.getRelative(face));
 										Block nextBlock = anotherBlock.getRelative(face);
 										while (nextBlock.getType() == Material.FENCE) {
-											Bukkit.broadcastMessage("(3) NextBlock @" + face + " X: " + nextBlock.getX()
-													+ " Y: " + nextBlock.getY() + " Z: " + nextBlock.getZ());
 											blocksAround.add(nextBlock.getRelative(face));
 											nextBlock = nextBlock.getRelative(face);
 										}
