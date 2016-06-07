@@ -31,7 +31,11 @@ public class MyEssentialsCommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("wispi")) {
 			this.wispi(sender, cmd, label, args);
 		}
-
+		
+		else if (cmd.getName().equalsIgnoreCase("god")) {
+			this.godMode(sender, cmd, label, args);
+		}
+		
 		else if (cmd.getName().equalsIgnoreCase("gmode")) {
 			this.gmode(sender, cmd, label, args);
 		}
@@ -94,6 +98,10 @@ public class MyEssentialsCommandExecutor {
 		} else if (cmd.getName().equalsIgnoreCase("crazy")) {
 			this.crazyName(sender, cmd, label, args);
 		}
+		
+		else if (cmd.getName().equalsIgnoreCase("repair")) {
+			this.repair(sender, cmd, label, args);
+		}
 
 		// HIER WEITERE COMMANDS!
 
@@ -112,12 +120,12 @@ public class MyEssentialsCommandExecutor {
 		otherPlayer = offlinePlayer.getOtherPlayer();
 
 		if ((args.length >= 2) && (otherPlayer == null)) {
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Der Spieler " + ChatColor.DARK_RED
-					+ otherPlayer + ChatColor.RED + " ist nicht online!");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Der Spieler "
+					+ ChatColor.DARK_RED + otherPlayer + ChatColor.RED + " ist nicht online!");
 		}
 		if (args.length < 2) {
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Der richtige Befehl lautet: "
-					+ ChatColor.DARK_RED + "/wispi [name] [text]");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+					+ "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/wispi [name] [text]");
 			return true;
 		}
 
@@ -130,14 +138,30 @@ public class MyEssentialsCommandExecutor {
 
 			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.AQUA + "WHISPER an "
 					+ ChatColor.DARK_GRAY + args[0] + ": " + text);
-			otherPlayer.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.AQUA + "WHISPER von "
-					+ ChatColor.DARK_GRAY + player.getName() + ": " + text);
+			otherPlayer.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.AQUA
+					+ "WHISPER von " + ChatColor.DARK_GRAY + player.getName() + ": " + text);
 			return true;
 		}
 
 		return false;
 	}
 
+	public boolean godMode(CommandSender sender, Command cmd, String label, String[] args) {
+		Player player = (Player) sender;
+		if (player.isInvulnerable()) {
+			player.setInvulnerable(false);
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+					+ "Du bist nun " + ChatColor.DARK_GREEN + "Sterblich" + ChatColor.GREEN + "!");
+			return true;
+		}
+		else {
+			player.setInvulnerable(true);
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+					+ "Du bist nun " + ChatColor.DARK_GREEN + "Unverwundbar" + ChatColor.GREEN + "!");
+			return true;
+		}
+	}
+	
 	public boolean gmode(CommandSender sender, Command cmd, String label, String[] args) {
 
 		// ###########################
@@ -149,12 +173,12 @@ public class MyEssentialsCommandExecutor {
 			GameMode gm = player.getGameMode();
 			if (gm == GameMode.CREATIVE) {
 				player.setGameMode(GameMode.SURVIVAL);
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du bist nun im "
-						+ ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+						+ "Du bist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
 			} else {
 				player.setGameMode(GameMode.CREATIVE);
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du bist nun im "
-						+ ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+						+ "Du bist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
 			}
 			return true;
 		}
@@ -163,25 +187,25 @@ public class MyEssentialsCommandExecutor {
 			GameMode gm = player.getGameMode();
 			if (args[0].equalsIgnoreCase("creative") == true) {
 				if (gm == GameMode.CREATIVE) {
-					player.sendMessage(
-							ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Du bist bereits im Creative Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+							+ "Du bist bereits im Creative Modus!");
 					return true;
 				} else {
 					player.setGameMode(GameMode.CREATIVE);
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du bist nun im "
-							+ ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+							+ "Du bist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
 					return true;
 				}
 			}
 			if (args[0].equalsIgnoreCase("survival") == true) {
 				if (gm == GameMode.SURVIVAL) {
-					player.sendMessage(
-							ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Du bist bereits im Survival Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+							+ "Du bist bereits im Survival Modus!");
 					return true;
 				} else {
 					player.setGameMode(GameMode.SURVIVAL);
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du bist nun im "
-							+ ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+							+ "Du bist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
 					return true;
 				}
 			}
@@ -192,8 +216,8 @@ public class MyEssentialsCommandExecutor {
 					return true;
 				} else {
 					player.setGameMode(GameMode.SPECTATOR);
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du bist nun im "
-							+ ChatColor.DARK_GREEN + "Spectator" + ChatColor.GREEN + " Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+							+ "Du bist nun im " + ChatColor.DARK_GREEN + "Spectator" + ChatColor.GREEN + " Modus!");
 				}
 			}
 
@@ -217,8 +241,8 @@ public class MyEssentialsCommandExecutor {
 			}
 
 			if ((args[0].equalsIgnoreCase("survival") == false) && (args[0].equalsIgnoreCase("creative") == false)) {
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Mögliche GameModes: "
-						+ ChatColor.DARK_RED + "Creative , Survival");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+						+ "Mögliche GameModes: " + ChatColor.DARK_RED + "Creative , Survival");
 				return true;
 			}
 
@@ -232,35 +256,35 @@ public class MyEssentialsCommandExecutor {
 			GameMode gm = player.getGameMode();
 			if (args[1].equalsIgnoreCase("creative") == true) {
 				if (gm == GameMode.CREATIVE) {
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Der Spieler "
-							+ ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED + " ist bereits im "
-							+ ChatColor.DARK_RED + "Creative" + ChatColor.RED + " Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+							+ "Der Spieler " + ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED
+							+ " ist bereits im " + ChatColor.DARK_RED + "Creative" + ChatColor.RED + " Modus!");
 					return true;
 				} else {
 					player.setGameMode(GameMode.CREATIVE);
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Der Spieler "
-							+ ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im "
-							+ ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+							+ "Der Spieler " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN
+							+ " ist nun im " + ChatColor.DARK_GREEN + "Creative" + ChatColor.GREEN + " Modus!");
 					return true;
 				}
 			}
 			if (args[1].equalsIgnoreCase("survival") == true) {
 				if (gm == GameMode.SURVIVAL) {
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Der Spieler "
-							+ ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED + " ist bereits im "
-							+ ChatColor.DARK_RED + "Survival" + ChatColor.RED + " Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+							+ "Der Spieler " + ChatColor.DARK_RED + otherPlayer.getName() + ChatColor.RED
+							+ " ist bereits im " + ChatColor.DARK_RED + "Survival" + ChatColor.RED + " Modus!");
 					return true;
 				} else {
 					player.setGameMode(GameMode.SURVIVAL);
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Der Spieler "
-							+ ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " ist nun im "
-							+ ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+							+ "Der Spieler " + ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN
+							+ " ist nun im " + ChatColor.DARK_GREEN + "Survival" + ChatColor.GREEN + " Modus!");
 					return true;
 				}
 			}
 			if ((args[1].equalsIgnoreCase("survival") == false) && (args[1].equalsIgnoreCase("creative") == false)) {
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Mögliche GameModes: "
-						+ ChatColor.DARK_RED + "Creative , Survival");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+						+ "Mögliche GameModes: " + ChatColor.DARK_RED + "Creative , Survival");
 				return true;
 			}
 		}
@@ -278,11 +302,11 @@ public class MyEssentialsCommandExecutor {
 		World world = player.getWorld();
 
 		if (args.length == 0) {
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Der richtige Befehl lautet: "
-					+ ChatColor.DARK_RED + "/tm [time]");
-			player.sendMessage(
-					ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Für [time] kann " + ChatColor.DARK_RED
-							+ "\"tag\", \"nacht\" oder ein Ganzzahliger Wert " + ChatColor.RED + "eingegeben werden.");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+					+ "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/tm [time]");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+					+ "Für [time] kann " + ChatColor.DARK_RED + "\"tag\", \"nacht\" oder ein Ganzzahliger Wert "
+					+ ChatColor.RED + "eingegeben werden.");
 			return true;
 		}
 		if (args.length >= 1) {
@@ -303,14 +327,14 @@ public class MyEssentialsCommandExecutor {
 			try {
 				wert = Integer.parseInt(args[0]);
 			} catch (NumberFormatException e) {
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Bitte " + ChatColor.DARK_RED
-						+ "\"tag\",\"nacht\" oder einen Ganzzahligen Wert eingeben!");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Bitte "
+						+ ChatColor.DARK_RED + "\"tag\",\"nacht\" oder einen Ganzzahligen Wert eingeben!");
 				return true;
 			}
 
 			world.setTime(wert);
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Die Zeit wurde auf "
-					+ ChatColor.DARK_GREEN + wert + ChatColor.GREEN + " gesetzt!");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+					+ "Die Zeit wurde auf " + ChatColor.DARK_GREEN + wert + ChatColor.GREEN + " gesetzt!");
 			return true;
 		}
 
@@ -325,11 +349,15 @@ public class MyEssentialsCommandExecutor {
 		Player player = (Player) sender;
 
 		ArrayList<String> list = new ArrayList<String>();
-		list.add(Bukkit.getServer().getPluginManager().getPlugin("" + MyEssentials.pluginName + "").getDescription().getName());
-		list.addAll(Bukkit.getServer().getPluginManager().getPlugin("" + MyEssentials.pluginName + "").getDescription().getAuthors());
-		list.add(Bukkit.getServer().getPluginManager().getPlugin("" + MyEssentials.pluginName + "").getDescription().getVersion());
+		list.add(Bukkit.getServer().getPluginManager().getPlugin("" + MyEssentials.pluginName + "").getDescription()
+				.getName());
+		list.addAll(Bukkit.getServer().getPluginManager().getPlugin("" + MyEssentials.pluginName + "").getDescription()
+				.getAuthors());
+		list.add(Bukkit.getServer().getPluginManager().getPlugin("" + MyEssentials.pluginName + "").getDescription()
+				.getVersion());
 
-		player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.YELLOW + "Plugin Information");
+		player.sendMessage(
+				ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.YELLOW + "Plugin Information");
 		for (String s : list) {
 			player.sendMessage("=> " + s);
 		}
@@ -345,7 +373,8 @@ public class MyEssentialsCommandExecutor {
 		Player player = (Player) sender;
 
 		if (args.length == 0) {
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED + "Du musst eine ItemID angeben.");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED
+					+ "Du musst eine ItemID angeben.");
 		} else if (args.length == 1 || args.length == 2) {
 			try {
 				int itemId = Integer.parseInt(args[0]);
@@ -356,12 +385,15 @@ public class MyEssentialsCommandExecutor {
 				}
 
 				player.getInventory().addItem(new ItemStack(itemId, anzahl));
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN + "Deinem Inventar wurde " + ChatColor.DARK_GREEN + anzahl + "x " + itemId + ChatColor.GREEN + " hinzugefügt!");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN
+						+ "Deinem Inventar wurde " + ChatColor.DARK_GREEN + anzahl + "x " + itemId + ChatColor.GREEN
+						+ " hinzugefügt!");
 
 				return true;
 
 			} catch (NumberFormatException e) {
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED + "Diese ID kenne ich nicht!");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED
+						+ "Diese ID kenne ich nicht!");
 				return true;
 			}
 
@@ -377,10 +409,10 @@ public class MyEssentialsCommandExecutor {
 		Player player = (Player) sender;
 
 		if (args.length == 0) {
-			player.sendMessage(
-					ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED + "Bitte Wetter eingeben: /w [Wetter]");
-			player.sendMessage(
-					ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED + "Wetter: \"sonne\", \"regen\", \"sturm\"");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED
+					+ "Bitte Wetter eingeben: /w [Wetter]");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED
+					+ "Wetter: \"sonne\", \"regen\", \"sturm\"");
 			return true;
 		} else if (args.length >= 1) {
 			World world = player.getWorld();
@@ -389,8 +421,8 @@ public class MyEssentialsCommandExecutor {
 				try {
 					zeitraum = Integer.parseInt(args[1]);
 				} catch (NumberFormatException e) {
-					player.sendMessage(
-							ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED + "Diesen Zeitraum kenne ich nicht!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED
+							+ "Diesen Zeitraum kenne ich nicht!");
 					return true;
 				}
 			}
@@ -398,15 +430,15 @@ public class MyEssentialsCommandExecutor {
 				world.setThundering(false);
 				world.setStorm(false);
 				world.setWeatherDuration(zeitraum);
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN + "Jetzt kommt "
-						+ ChatColor.DARK_GREEN + "Sonne" + ChatColor.GREEN + ".");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN
+						+ "Jetzt kommt " + ChatColor.DARK_GREEN + "Sonne" + ChatColor.GREEN + ".");
 				return true;
 			} else if (args[0].equalsIgnoreCase("regen")) {
 				world.setThundering(false);
 				world.setStorm(true);
 				world.setWeatherDuration(zeitraum);
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN + "Jetzt kommt "
-						+ ChatColor.DARK_GREEN + "Regen" + ChatColor.GREEN + ".");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN
+						+ "Jetzt kommt " + ChatColor.DARK_GREEN + "Regen" + ChatColor.GREEN + ".");
 				return true;
 			} else if (args[0].equalsIgnoreCase("sturm")) {
 				world.setThundering(true);
@@ -414,14 +446,14 @@ public class MyEssentialsCommandExecutor {
 				world.setWeatherDuration(zeitraum);
 				int sturmZeit = (int) (zeitraum * 0.8);
 				world.setThunderDuration(sturmZeit);
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN + "Jetzt kommt ein "
-						+ ChatColor.DARK_GREEN + "Gewitter" + ChatColor.GREEN + ".");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.GREEN
+						+ "Jetzt kommt ein " + ChatColor.DARK_GREEN + "Gewitter" + ChatColor.GREEN + ".");
 				return true;
 			}
 			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED
 					+ "Bitte Wetter eingeben: /w [Wetter] <Zeitraum>");
-			player.sendMessage(
-					ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED + "Wetter: \"sonne\", \"regen\", \"sturm\"");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "] " + ChatColor.RED
+					+ "Wetter: \"sonne\", \"regen\", \"sturm\"");
 		}
 		return false;
 	}
@@ -477,9 +509,10 @@ public class MyEssentialsCommandExecutor {
 						+ (int) blockY + " Z:" + (int) blockZ);
 				return true;
 			} catch (NumberFormatException e) {
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+						+ "Dies sind keine gültigen Koordinaten!");
 				player.sendMessage(
-						ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Dies sind keine gültigen Koordinaten!");
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/tel [X] [Y] [Z]");
+						ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/tel [X] [Y] [Z]");
 				return true;
 			}
 		} else if (args.length == 4) {
@@ -508,14 +541,15 @@ public class MyEssentialsCommandExecutor {
 				} catch (NumberFormatException e) {
 					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
 							+ "Dies sind keine gültigen Koordinaten!");
-					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/tel [User] [X] [Y] [Z]");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+							+ "/tel [User] [X] [Y] [Z]");
 					return true;
 				}
 			} else {
 
 			}
-			player.sendMessage(
-					ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Dieser Spieler ist leider nicht online!");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+					+ "Dieser Spieler ist leider nicht online!");
 			return true;
 		}
 
@@ -531,7 +565,8 @@ public class MyEssentialsCommandExecutor {
 		if (args.length == 0) {
 			player.setHealth(20);
 			player.setFoodLevel(20);
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du hast dich geheilt.");
+			player.sendMessage(
+					ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du hast dich geheilt.");
 			return true;
 		} else if (args.length >= 1) {
 			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
@@ -540,8 +575,8 @@ public class MyEssentialsCommandExecutor {
 			if (otherPlayer != null) {
 				otherPlayer.setHealth(20);
 				otherPlayer.setFoodLevel(20);
-				otherPlayer.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.DARK_GREEN + player.getName()
-						+ ChatColor.GREEN + " hat dich geheilt!");
+				otherPlayer.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.DARK_GREEN
+						+ player.getName() + ChatColor.GREEN + " hat dich geheilt!");
 				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du hast "
 						+ ChatColor.DARK_GREEN + otherPlayer.getName() + ChatColor.GREEN + " geheilt.");
 				return true;
@@ -561,23 +596,33 @@ public class MyEssentialsCommandExecutor {
 		// ##################################
 		Player player = (Player) sender;
 		if (args.length == 0) {
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/crazy [on | off]");
+			player.sendMessage(
+					ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/crazy [on | off]");
 		} else if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("off")) {
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Willkommen zurück "
-						+ ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+						+ "Willkommen zurück " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
 				player.setDisplayName(player.getName());
 				player.setPlayerListName(player.getName());
 			} else if (args[0].equalsIgnoreCase("on")) {
 				player.setDisplayName(ChatColor.MAGIC + player.getName() + ChatColor.RESET);
 				player.setPlayerListName(ChatColor.MAGIC + player.getName() + ChatColor.RESET);
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Bis bald "
-						+ ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+						+ "Bis bald " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + ".");
 			} else {
-				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/crazy [on | off]");
+				player.sendMessage(
+						ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/crazy [on | off]");
 			}
 		}
 
 		return false;
+	}
+	
+	public boolean repair(CommandSender sender, Command cmd, String label, String[] args) {
+		Player player = (Player) sender;
+		player.getInventory().getItemInMainHand().setDurability((short)0);
+		player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+				+ "Dein Item wurde erfolgreich " + ChatColor.DARK_GREEN + "repariert" + ChatColor.GREEN + "!");
+		return true;
 	}
 }

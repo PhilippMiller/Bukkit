@@ -9,6 +9,11 @@ commands:
         usage: /<command> [Player] [Nachricht]
         permission: chuckl0r.MyEssentials.wispi
         permission-message: Du hast das Recht <permission> nicht!
+    god:
+        description: Der GodMode Changer.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.godmode
+        permission-message: Du hast das Recht <permission> nicht!
     gmode:
         description: Der GameMode Changer.
         usage: /<command> ([GameMode / Spieler]) ([GameMode])
@@ -61,4 +66,9 @@ commands:
         description: Crazy Name.
         usage: /<command>
         permission: chuckl0r.MyEssentials.crazy
+        permission-message: Du hast das Recht <permission> nicht!
+    repair:
+        description: Repair the in Item in your main hand.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.repair
         permission-message: Du hast das Recht <permission> nicht!

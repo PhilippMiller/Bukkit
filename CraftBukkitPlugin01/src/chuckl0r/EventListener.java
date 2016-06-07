@@ -16,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.material.Directional;
 
@@ -25,6 +26,13 @@ public class EventListener implements Listener {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onLoseFoode(FoodLevelChangeEvent event) {
+		Player player = (Player) event.getEntity();
+		if (player.isInvulnerable())
+			event.setCancelled(true);
+	}
+	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
