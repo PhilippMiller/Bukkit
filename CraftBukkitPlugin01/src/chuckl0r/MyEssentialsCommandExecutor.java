@@ -1,20 +1,24 @@
 package chuckl0r;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class MyEssentialsCommandExecutor {
-
-	private Player otherPlayer = null;
 	private OfflinePlayerCheck offlinePlayer = new OfflinePlayerCheck();
 
 	// COMMAND AUFRUFER
@@ -31,11 +35,11 @@ public class MyEssentialsCommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("wispi")) {
 			this.wispi(sender, cmd, label, args);
 		}
-		
+
 		else if (cmd.getName().equalsIgnoreCase("god")) {
 			this.godMode(sender, cmd, label, args);
 		}
-		
+
 		else if (cmd.getName().equalsIgnoreCase("gmode")) {
 			this.gmode(sender, cmd, label, args);
 		}
@@ -98,9 +102,21 @@ public class MyEssentialsCommandExecutor {
 		} else if (cmd.getName().equalsIgnoreCase("crazy")) {
 			this.crazyName(sender, cmd, label, args);
 		}
-		
+
 		else if (cmd.getName().equalsIgnoreCase("repair")) {
 			this.repair(sender, cmd, label, args);
+		}
+
+		else if (cmd.getName().equalsIgnoreCase("glow")) {
+			this.glowEffect(sender, cmd, label, args);
+		}
+
+		else if (cmd.getName().equalsIgnoreCase("mob")) {
+			this.mobSpawner(sender, cmd, label, args);
+		}
+
+		else if (cmd.getName().equalsIgnoreCase("fly")) {
+			this.fly(sender, cmd, label, args);
 		}
 
 		// HIER WEITERE COMMANDS!
@@ -115,9 +131,10 @@ public class MyEssentialsCommandExecutor {
 		// ######COMMAND "/wispi"######
 		// ############################
 		Player player = (Player) sender;
+		OfflinePlayerCheck offlinePlayer = new OfflinePlayerCheck();
 
 		offlinePlayer.OfflinePlayerChecker(player, args[0]);
-		otherPlayer = offlinePlayer.getOtherPlayer();
+		Player otherPlayer = offlinePlayer.getOtherPlayer();
 
 		if ((args.length >= 2) && (otherPlayer == null)) {
 			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "Der Spieler "
@@ -152,23 +169,22 @@ public class MyEssentialsCommandExecutor {
 		// ##################################
 		Player player = (Player) sender;
 		World world = player.getWorld();
-		
+
 		if (player.isInvulnerable()) {
 			world.strikeLightningEffect(player.getLocation());
 			player.setInvulnerable(false);
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
-					+ "Du bist nun " + ChatColor.DARK_GREEN + "Sterblich" + ChatColor.GREEN + "!");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du bist nun "
+					+ ChatColor.DARK_GREEN + "Sterblich" + ChatColor.GREEN + "!");
 			return true;
-		}
-		else {
+		} else {
 			player.setInvulnerable(true);
 			world.strikeLightningEffect(player.getLocation());
-			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
-					+ "Du bist nun " + ChatColor.DARK_GREEN + "Unverwundbar" + ChatColor.GREEN + "!");
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Du bist nun "
+					+ ChatColor.DARK_GREEN + "Unverwundbar" + ChatColor.GREEN + "!");
 			return true;
 		}
 	}
-	
+
 	public boolean gmode(CommandSender sender, Command cmd, String label, String[] args) {
 
 		// ###########################
@@ -230,7 +246,7 @@ public class MyEssentialsCommandExecutor {
 
 			OfflinePlayerCheck offlinePlayer = new OfflinePlayerCheck();
 			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
-			otherPlayer = offlinePlayer.getOtherPlayer();
+			Player otherPlayer = offlinePlayer.getOtherPlayer();
 			if (otherPlayer != null) {
 				GameMode gm_other = otherPlayer.getGameMode();
 				if (gm_other == GameMode.CREATIVE) {
@@ -257,7 +273,7 @@ public class MyEssentialsCommandExecutor {
 
 		OfflinePlayerCheck offlinePlayer = new OfflinePlayerCheck();
 		offlinePlayer.OfflinePlayerChecker(sender, args[0]);
-		otherPlayer = offlinePlayer.getOtherPlayer();
+		Player otherPlayer = offlinePlayer.getOtherPlayer();
 
 		if ((args.length >= 2) && (otherPlayer != null)) {
 			GameMode gm = player.getGameMode();
@@ -473,7 +489,7 @@ public class MyEssentialsCommandExecutor {
 		OfflinePlayerCheck offlinePlayer = new OfflinePlayerCheck();
 		if (args.length == 1) {
 			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
-			otherPlayer = offlinePlayer.getOtherPlayer();
+			Player otherPlayer = offlinePlayer.getOtherPlayer();
 			if (otherPlayer != null) {
 				float blockX = otherPlayer.getLocation().getBlockX();
 				float blockY = otherPlayer.getLocation().getBlockY();
@@ -524,7 +540,7 @@ public class MyEssentialsCommandExecutor {
 			}
 		} else if (args.length == 4) {
 			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
-			otherPlayer = offlinePlayer.getOtherPlayer();
+			Player otherPlayer = offlinePlayer.getOtherPlayer();
 			if (otherPlayer != null) {
 
 				try {
@@ -577,7 +593,7 @@ public class MyEssentialsCommandExecutor {
 			return true;
 		} else if (args.length >= 1) {
 			offlinePlayer.OfflinePlayerChecker(sender, args[0]);
-			otherPlayer = offlinePlayer.getOtherPlayer();
+			Player otherPlayer = offlinePlayer.getOtherPlayer();
 
 			if (otherPlayer != null) {
 				otherPlayer.setHealth(20);
@@ -624,12 +640,404 @@ public class MyEssentialsCommandExecutor {
 
 		return false;
 	}
-	
+
 	public boolean repair(CommandSender sender, Command cmd, String label, String[] args) {
+		// ##################################
+		// ######COMMAND "/repair"###########
+		// ##################################
 		Player player = (Player) sender;
-		player.getInventory().getItemInMainHand().setDurability((short)0);
+		player.getInventory().getItemInMainHand().setDurability((short) 0);
 		player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
 				+ "Dein Item wurde erfolgreich " + ChatColor.DARK_GREEN + "repariert" + ChatColor.GREEN + "!");
+		return true;
+	}
+
+	public boolean glowEffect(CommandSender sender, Command cmd, String label, String[] args) {
+		// ##################################
+		// ######COMMAND "/glow"###########
+		// ##################################
+		Player player = (Player) sender;
+		if (args.length < 1) {
+			if (player.hasPotionEffect(PotionEffectType.GLOWING)) {
+					player.removePotionEffect(PotionEffectType.GLOWING);
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+							+ "Glowing wurde " + ChatColor.DARK_GREEN + "deaktiviert" + ChatColor.GREEN + "!");
+			} else {
+				player.addPotionEffect(
+						new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, Integer.MAX_VALUE));
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+						+ "Glowing wurde " + ChatColor.DARK_GREEN + "aktiviert" + ChatColor.GREEN + "!");
+			}
+		} else {
+			if (offlinePlayer.OfflinePlayerChecker(sender, args[0])) {
+				Player otherPlayer = offlinePlayer.getOtherPlayer();
+				if (otherPlayer.hasPotionEffect(PotionEffectType.GLOWING)) {
+					otherPlayer.removePotionEffect(PotionEffectType.GLOWING);
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN
+							+ " hat den Glowing effekt bei dir " + ChatColor.DARK_GREEN + "deaktiviert" + ChatColor.GREEN + "!");
+				} else {
+					otherPlayer.addPotionEffect(
+							new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, Integer.MAX_VALUE));
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN
+							+ " hat den Glowing effekt bei dir " + ChatColor.DARK_GREEN + "aktiviert" + ChatColor.GREEN + "!");
+				}
+			} else {
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+						+ "Der spieler " + ChatColor.DARK_RED + args[0] + ChatColor.RED + "ist nicht online!");
+				player.sendMessage(
+						ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/glow ([Spieler])");
+			}
+		}
+		return true;
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean mobSpawner(CommandSender sender, Command cdm, String label, String[] args) {
+		// ############################
+		// ######COMMAND "/mob"######
+		// ############################
+		Player player = (Player) sender;
+		Block block = player.getTargetBlock((HashSet<Byte>) null, 100);
+
+		if (args.length < 1) {
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+					+ "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/mob <MOB NAME> [Anzahl]");
+			player.sendMessage(ChatColor.AQUA + "Passive Mobs:");
+			player.sendMessage("Bat, Chicken, Cow, Mushroom_Cow, Pig, Rabbit, Sheep, Squid, Villager");
+			player.sendMessage("");
+			player.sendMessage(ChatColor.GRAY + "Neutrale Mobs:");
+			player.sendMessage("Cave_Spider, Enderman, Spider, Zombie_Pigman");
+			player.sendMessage("");
+			player.sendMessage(ChatColor.RED + "Agressive Mobs:");
+			player.sendMessage(
+					"Blaze, Creeper, Endermite, Ghast, Guardian, Magma_Cube, Shulker, Silverfish, Skeleton, Slime, Witch, Zombie");
+			player.sendMessage("");
+			player.sendMessage(ChatColor.DARK_GREEN + "Tame-bare Mobs:");
+			player.sendMessage("Horse, Ocelot, Wolf");
+			player.sendMessage("");
+			player.sendMessage(ChatColor.YELLOW + "Utility Mobs:");
+			player.sendMessage("Iron_Golem, Snow_Golem");
+			player.sendMessage("");
+			player.sendMessage(ChatColor.DARK_RED + "BOSS Mobs:");
+			player.sendMessage("Ender_Dragon, Wither");
+			player.sendMessage("");
+			player.sendMessage(ChatColor.WHITE + "Ungenutze Mobs:");
+			player.sendMessage("Giant");
+
+			return false;
+		}
+
+		World world = player.getWorld();
+		String entityName = args[0].toLowerCase();
+		int count = 1;
+
+		if (args.length > 1) {
+			if (!args[1].equals("")) {
+				try {
+					count = Integer.parseInt(args[1]);
+				} catch (Exception ex) {
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+							+ "Die Zahl " + ChatColor.DARK_RED + args[1] + ChatColor.RED + " kenne ich nicht!");
+					player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+							+ "Der richtige Befehl lautet: " + ChatColor.DARK_RED + "/mob <MOB NAME> [Anzahl]");
+					count = 1;
+				}
+			}
+		}
+
+		switch (entityName) {
+		// Passive Mobs (Bat, Chicken, Cow, Mushroom_Cow, Pig, Rabbit, Sheep,
+		// Squid, Villager)
+		case "bat":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.BAT);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "chicken":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.CHICKEN);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "cow":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.COW);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "mushroom_cow":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.MUSHROOM_COW);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "pig":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.PIG);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "rabbit":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.RABBIT);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "sheep":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.SHEEP);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "squid":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.SQUID);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "villager":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.VILLAGER);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		// Neutrale Mobs (Cave_Spider, Enderman, Spider, Zombie_Pigman)
+		case "cave_spider":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.CAVE_SPIDER);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "enderman":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.ENDERMAN);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "spider":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.SPIDER);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "zombie_pigman":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.PIG_ZOMBIE);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		// Agressive Mobs (Blaze, Creeper, Endermite, Ghast, Guardian,
+		// Magma_Cube, Shulker, Silverfish, Skeleton, Slime, Witch, Zombie)
+		case "blaze":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.BLAZE);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "creeper":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.CREEPER);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "endermite":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.ENDERMITE);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "ghast":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.GHAST);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "guardian":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.GUARDIAN);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "magma_cube":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.MAGMA_CUBE);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "shulker":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.MAGMA_CUBE);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "silverfish":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.SILVERFISH);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "skeleton":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.SKELETON);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "slime":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.SLIME);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "witch":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.WITCH);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "zombie":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.ZOMBIE);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		// Tame-bare Mobs (Horse, Ocelot, Wolf)
+		case "horse":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.HORSE);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "ocelot":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.OCELOT);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "wolf":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.WOLF);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		// Utility Mobs (Iron_Golem, Snow_Golem)
+		case "iron_golem":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.IRON_GOLEM);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "snow_golem":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.SNOWMAN);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		// BOSS Mobs (Ender_Dragon, Wither)
+		case "ender_dragon":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.ENDER_DRAGON);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		case "wither":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.WITHER);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		// Ungenutze Mobs (Giant)
+		case "giant":
+			for (int i = 0; i < count; i++) {
+				world.spawnEntity(block.getLocation(), EntityType.GIANT);
+			}
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN + "Ich rufe: "
+					+ ChatColor.DARK_GREEN + count + "x " + entityName + ChatColor.GREEN + "!");
+			break;
+		// DEFAULT IF THE TYPE IS UNKNOWN!
+		default:
+			player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+					+ "Dieses Wesen ist mir " + ChatColor.DARK_RED + "unbekannt" + ChatColor.RED + "!");
+			break;
+		}
+
+		return true;
+	}
+
+	public boolean fly(CommandSender sender, Command cmd, String label, String[] args) {
+		// ############################
+		// ######COMMAND "/fly"######
+		// ############################
+		Player player = (Player) sender;
+
+		if (args.length < 1) {
+			if (!player.getAllowFlight()) {
+				player.setAllowFlight(true);
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+						+ "Du darfst nun " + ChatColor.DARK_GREEN + "fliegen" + ChatColor.GREEN + "!");
+			} else {
+				player.setFlying(false);
+				player.setAllowFlight(false);
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.GREEN
+						+ "Du darfst jetzt " + ChatColor.UNDERLINE + "nicht" + ChatColor.RESET + ChatColor.GREEN
+						+ " mehr " + ChatColor.DARK_GREEN + "fliegen" + ChatColor.GREEN + "!");
+			}
+		} else {
+			if (offlinePlayer.OfflinePlayerChecker(sender, args[0])) {
+				Player otherPlayer = offlinePlayer.getOtherPlayer();
+				if (!otherPlayer.getAllowFlight()) {
+					otherPlayer.setAllowFlight(true);
+					otherPlayer.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: "
+							+ ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + " erlaubt dir nun zu "
+							+ ChatColor.DARK_GREEN + "fliegen" + ChatColor.GREEN + "!");
+				} else {
+					otherPlayer.setFlying(false);
+					otherPlayer.setAllowFlight(false);
+					otherPlayer.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: "
+							+ ChatColor.DARK_GREEN + player.getName() + ChatColor.GREEN + " erlaubt dir nun "
+							+ ChatColor.UNDERLINE + "nicht" + ChatColor.RESET + ChatColor.GREEN + " mehr zu "
+							+ ChatColor.DARK_GREEN + "fliegen" + ChatColor.GREEN + "!");
+				}
+			} else {
+				player.sendMessage(ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED
+						+ "Der spieler " + ChatColor.DARK_RED + args[0] + ChatColor.RED + "ist nicht online!");
+				player.sendMessage(
+						ChatColor.GOLD + "[" + MyEssentials.pluginName + "]: " + ChatColor.RED + "/fly ([Spieler])");
+			}
+		}
+
 		return true;
 	}
 }

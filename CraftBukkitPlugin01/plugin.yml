@@ -72,3 +72,19 @@ commands:
         usage: /<command>
         permission: chuckl0r.MyEssentials.repair
         permission-message: Du hast das Recht <permission> nicht!
+    glow:
+        description: Add the glow effect to player.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.glow
+        permission-message: Du hast das Recht <permission> nicht!
+    mob:
+        description: Spawn a spezified mob in front of the player.
+        usage: /<command>
+        permission: chuckl0r.MyEssentials.mob
+        permission-message: Du hast das Recht <permission> nicht!
+    fly:
+        description: Allow a player to fly
+        usage: /<command> ([Spieler])
+        permission: chuckl0r.MyEssentials.fly
+        permission-message: Du hast das Recht <permission> nicht!
+        
