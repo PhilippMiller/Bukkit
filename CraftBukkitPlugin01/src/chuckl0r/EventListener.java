@@ -11,20 +11,13 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Sheep;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.material.Directional;
@@ -46,11 +39,12 @@ public class EventListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteractWithRod(PlayerInteractEvent e) {
 		Player player = (Player) e.getPlayer();
-
-		if (player.getItemInHand().getType() == Material.BLAZE_ROD) {
-			Block block = player.getTargetBlock((HashSet<Byte>) null, 100);
-			player.getWorld().strikeLightningEffect(block.getLocation());
-
+		if (player.isInvulnerable()) {
+			if (player.getItemInHand().getType() == Material.BLAZE_ROD) {
+				Block block = player.getTargetBlock((HashSet<Byte>) null, 100);
+				player.getWorld().strikeLightningEffect(block.getLocation());
+	
+			}
 		}
 	}
 
