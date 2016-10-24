@@ -66,7 +66,6 @@ public class EventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onSignEdit(SignChangeEvent e) {
-		Bukkit.broadcastMessage(e.getLine(0));
 		if (e.getLine(0).equalsIgnoreCase("[Redstone]")) {
 			e.setLine(0, ChatColor.DARK_RED + "[RedStone]");
 
