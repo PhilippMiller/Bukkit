@@ -134,9 +134,10 @@ public class EventListener implements Listener {
 		if (!signList.isEmpty()) {
 			for (Sign sign : signList) {
 				String signLine0 = sign.getLine(0);
-				if (signLine0.equalsIgnoreCase("[Gate]")) {
+				/*if (signLine0.equalsIgnoreCase("[Gate]")) {
 					gateFunktionality(e);
-				} else if (signLine0.equalsIgnoreCase("[Redstone]")
+				} else */ 
+					if (signLine0.equalsIgnoreCase("[Redstone]")
 						|| signLine0.equalsIgnoreCase(ChatColor.DARK_RED + "[Redstone]")) {
 					redStoneAtXYZFunktionality(e, sign);
 				}
